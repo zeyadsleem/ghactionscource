@@ -1,0 +1,51 @@
+on:
+  workflow_dispatch:
+
+  # jobs:
+  # actions-job:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Say Hello
+  #       uses: .github/actions/Greetin@v1
+  #       with:
+  #         name: Ahmed
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #
+  # jobs:
+  #   hybird_job:
+  #     runs-on: ubuntu-latest
+  #     steps:
+  #       - name: Run a command in Ubuntu VM
+  #         run: echo "This runs on the Ubuntu VM"
+  #
+  #       - name: Run a command in Alpine Conataner
+  #         uses: docker://alpine:3.14 # The image must be accessible withut authentication
+  #         with:
+  #           entrypoint: /bin/sh
+  #           args: |
+  #             -c  "echo This runs inside an Alpine container"
+  #
+  #       - name: Run another command in Ubuntu VM
+  #         run: echo "This runs on the Ubuntu VM"
+  #
+  #   dockerized_job:
+  #     runs-on: ubuntu-latest
+  #     container: ghcr.io
+  #     steps:
+  #       - run: node --version
+  #       - run: echo "This whole job runs inside a Node.js container"
+
+jobs:
+  job_1:
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node_version: [14.x, 15.x, 16.x]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/setup-node@v3.4.0
+        with:
+          node_version: ${{ matrix.node_version }}

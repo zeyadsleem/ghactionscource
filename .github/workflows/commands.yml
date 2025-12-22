@@ -7,8 +7,8 @@ jobs:
     steps:
       - name: Set API key
         run: |
-          if [ -f "config.yaml" ]; then
+          if [ -f "config.yml" ]; then
             echo "::debug::config.yaml exists"
           else
             echo "::error::config.yaml is missing"
-          f
+          fi
